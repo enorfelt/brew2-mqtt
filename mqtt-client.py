@@ -19,7 +19,7 @@ def on_message(client, userdata, msg):
     print("Topic: {} / Message: {}".format(msg.topic,
                                            str(msg.payload.decode("UTF-8"))))
 
-    if (msg.topic == "valve"):
+    if (msg.topic.decode("UTF-8") == "valve"):
       valve.setPercentageOpen(msg.payload)
 
     if(msg.payload.decode("UTF-8") == "Reply"):
