@@ -11,6 +11,8 @@ class Valve:
     print("init normalized value to {}".format(0.0))
     Valve.dac.noramlized_value = 0.0
 
-  def setPercentageOpen(self, noramlized: float):
-    print("set normalized value to {}".format(noramlized))
-    Valve.dac.noramlized_value = noramlized
+  def setPercentageOpen(self):
+    #value = float(normalized)
+    print("set normalized value to {}".format(0.5))
+    #print("Yes") if value == 0.5 else print ("No")
+    Valve.dac.noramlized_value = 0.5
