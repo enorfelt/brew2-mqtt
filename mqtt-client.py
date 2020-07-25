@@ -10,7 +10,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("brew2-out")
+    client.subscribe("valve")
 
 # The callback for when a PUBLISH message is received from the server.
 
@@ -23,7 +23,7 @@ def on_message(client, userdata, msg):
       valve.setPercentageOpen(msg.payload)
 
     if(msg.payload.decode("UTF-8") == "Reply"):
-      client.publish("brew2-in", os.environ.get('OS', ''))
+      client.publish("brew2", os.environ.get('OS', ''))
 
 
 client = mqtt.Client()
