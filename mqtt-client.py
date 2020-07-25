@@ -1,10 +1,18 @@
 import paho.mqtt.client as mqtt
 import os
 
+import board
+import busio
+import adafruit_mcp4725
+
 from valve import Valve
 # The callback for when the client receives a CONNACK response from the server.
 
-valve = Valve()
+#valve = Valve()
+
+i2c = busio.I2C(board.SCL, board.SDA)
+dac = adafruit_mcp4725.MCP4725(i2c)
+dac.noramlized_value = 0.0
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -22,7 +30,8 @@ def on_message(client, userdata, msg):
 
     if msg.topic == "valve":
       print("here")
-      valve.setPercentageOpen()
+      #valve.setPercentageOpen()
+      dac.noramlized_value = 0.0
 
     if(msg.payload.decode("UTF-8") == "Reply"):
       client.publish("brew2", os.environ.get('OS', ''))
