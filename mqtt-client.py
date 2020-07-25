@@ -31,7 +31,7 @@ def on_message(client, userdata, msg):
     if msg.topic == "valve":
       print("here")
       #valve.setPercentageOpen()
-      dac.noramlized_value = 0.0
+      dac.noramlized_value = 0.5
 
     if(msg.payload.decode("UTF-8") == "Reply"):
       client.publish("brew2", os.environ.get('OS', ''))
