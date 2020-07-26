@@ -22,7 +22,7 @@ def on_message(client, userdata, msg):
                                            str(msg.payload.decode("UTF-8"))))
 
     if msg.topic == "valve":
-      valve.setPercentageOpen()
+      valve.setPercentageOpen(msg.payload)
 
     if(msg.payload.decode("UTF-8") == "Reply"):
       client.publish("brew2", os.environ.get('OS', ''))
