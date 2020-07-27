@@ -11,7 +11,6 @@ class Valve:
         print("init normalized value to {}".format(0))      
         Valve.dac.value = 0
 
-    def setPercentageOpen(self, normalized):
-        value = int(normalized)
+    def set_value(self, value):
         print("set normalized value to {}".format(value))
         Valve.dac.value = value

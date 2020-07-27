@@ -7,6 +7,7 @@ from valve import Valve
 
 valve = Valve()
 
+
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
 
@@ -22,10 +23,10 @@ def on_message(client, userdata, msg):
                                            str(msg.payload.decode("UTF-8"))))
 
     if msg.topic == "valve":
-      valve.setPercentageOpen(msg.payload)
+        valve.set_value(int(msg.payload))
 
     if(msg.payload.decode("UTF-8") == "Reply"):
-      client.publish("brew2", os.environ.get('OS', ''))
+        client.publish("brew2", os.environ.get('OS', ''))
 
 
 client = mqtt.Client()
@@ -44,10 +45,10 @@ client.connect(SERVER_IP_ADDRESS, 1883, 60)
 client.loop_start()
 
 try:
-  while True:
-    time.sleep(1)
+    while True:
+        time.sleep(1)
 except KeyboardInterrupt:
-  print("Press Ctrl-C to terminate while statement")
-  pass
+    print("Press Ctrl-C to terminate while statement")
+    pass
 
 client.loop_stop()
