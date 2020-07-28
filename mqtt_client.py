@@ -3,17 +3,19 @@ import os
 import time
 
 from valve import Valve
+from pressure_sensor import PressureSensor
 # The callback for when the client receives a CONNACK response from the server.
 
 valve = Valve()
-
+pressureSensor = PressureSensor()
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("valve")
+    client.subscribe("valve-req")
+    client.subscribe("pressure-req")
 
 # The callback for when a PUBLISH message is received from the server.
 
@@ -22,12 +24,12 @@ def on_message(client, userdata, msg):
     print("Topic: {} / Message: {}".format(msg.topic,
                                            str(msg.payload.decode("UTF-8"))))
 
-    if msg.topic == "valve":
+    if msg.topic == "valve-req":
         valve.set_value(int(msg.payload))
 
-    if(msg.payload.decode("UTF-8") == "Reply"):
-        client.publish("brew2", os.environ.get('OS', ''))
-
+    if (msg.topic == "pressure-req"):
+        result = pressureSensor.read()
+        client.publish("pressure-res", result)
 
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -46,9 +48,10 @@ client.loop_start()
 
 try:
     while True:
-        time.sleep(1)
+        pass
 except KeyboardInterrupt:
     print("Press Ctrl-C to terminate while statement")
     pass
 
 client.loop_stop()
+client.disconnect()
