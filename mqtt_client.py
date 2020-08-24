@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import os
 import time
+import json
 
 from valve import Valve
 from pressure_sensor import PressureSensor
@@ -29,7 +30,7 @@ def on_message(client, userdata, msg):
 
     if (msg.topic == "pressure-req"):
         result = pressureSensor.read()
-        client.publish("pressure-res", result)
+        client.publish("pressure-res", json.dumps(result))
 
 client = mqtt.Client()
 client.on_connect = on_connect

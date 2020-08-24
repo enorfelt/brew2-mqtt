@@ -15,4 +15,6 @@ class PressureSensor:
         self.chan = AnalogIn(self.ads, ADS.P0)
 
     def read(self):
-        return (self.chan.value, self.chan.voltage)
+        value = self.chan.value
+        volt = self.chan.voltage
+        return {"value": value, "voltage": volt} 
