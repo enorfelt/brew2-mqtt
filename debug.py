@@ -1,11 +1,9 @@
 import time
 import json
 
-from valve import Valve
 from pressure_sensor import PressureSensor
 # The callback for when the client receives a CONNACK response from the server.
 
-valve = Valve()
 pressureSensor = PressureSensor()
 
 
